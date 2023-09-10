@@ -1,1 +1,4 @@
-Vagrant mais servidor web com provisionamento via script .sh
+Criando ambientes de teste de servidores web com a utilização de:
+Vagrant
+Shell scripts
+Ansible
