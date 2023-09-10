@@ -1,0 +1,20 @@
+- hosts: all
+  become: yes
+  tasks:
+#    - name: "Atualiza pacotes"
+    - shell: sudo apt-get update
+
+#    - name: "Atualiza o nginx"
+    - shell: sudo apt-get -y install nginx
+
+    - shell: sudo apt-get install -y \
+             lsb-release \
+             ca-certificates \
+             apt-transport-https \
+             software-properties-common
+
+    - shell: sudo add-apt-repository ppa:ondrej/php
+
+    - shell: sudo apt-get -y update
+
+    - shell: sudo apt-get -y install php8.1
