@@ -1,8 +1,24 @@
 - hosts: all
   become: yes
   tasks:
-    - name: Instalando Nginx
-      ansible.builtin.apt:
-        name: nginx
-        state: latest
+
+    - name: Ansible apt to install multiple packages - LAMP
+      register: updatesys
+      apt:
         update_cache: yes
+        name:
+          - apache2 
+          - nginx      
+        state: present
+
+    - name: Gather Package facts
+      package_facts:
+        manager: auto
+
+    - name: Instalando Apache2 e Nginx
+      debug:
+        msg: "{{item}} is installed"
+      when: '"{{item}}" in ansible_facts.packages'
+      with_items:
+        - apache2  
+        - nginx
