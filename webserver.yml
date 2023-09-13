@@ -1,24 +1,31 @@
 - hosts: all
   become: yes
   tasks:
+    - name: Install the nginx packages
+      yum: name="{{ item }}" state=present      
+      with_items: nginx  
+      when: ansible_os_family == "RedHat"
 
-    - name: Ansible apt to install multiple packages - LAMP
-      register: updatesys
-      apt:
-        update_cache: yes
-        name:
-          - apache2 
-          - nginx      
-        state: present
+    - name: Install the nginx packages
+      apt: name="{{ item }}" state=latest
+      with_items: 
+        - nginx         
+        - apache2
+      environment: env  
+      when: ansible_os_family == "Debian"
 
-    - name: Gather Package facts
-      package_facts:
-        manager: auto
 
-    - name: Instalando Apache2 e Nginx
-      debug:
-        msg: "{{item}} is installed"
-      when: '"{{item}}" in ansible_facts.packages'
-      with_items:
-        - apache2  
-        - nginx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
